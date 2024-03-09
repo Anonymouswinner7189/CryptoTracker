@@ -155,7 +155,7 @@ const CoinsTable = () => {
                             <span
                                 style={{
                                   textTransform: "uppercase",
-                                  color:"white",
+                                  color:"black",
                                   fontSize: 22,
                                 }}
                             >
