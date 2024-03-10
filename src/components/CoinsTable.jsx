@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { CoinList } from "../config/api";
 import { CryptoState } from "../CryptoContext";
 import { Container } from "@mui/system";
 import {
@@ -44,22 +42,13 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
 }));
 
 const CoinsTable = () => {
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(false);
+  
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
 
-  const { currency, symbol } = CryptoState();
-
-  const fetchCoins = async () => {
-    setLoading(true);
-    const { data } = await axios.get(CoinList(currency));
-
-    setCoins(data);
-    setLoading(false);
-  };
+  const { currency, symbol ,coins, loading, fetchCoins} = CryptoState();
 
   useEffect(() => {
     fetchCoins();
@@ -136,6 +125,7 @@ const CoinsTable = () => {
                       <RowItem
                         onClick={() => navigate(`/coins/${row.id}`)}
                         key={row.name}
+                        style={{ cursor: 'pointer' }}
                       >
                         <TableCell
                           component="th"
@@ -145,30 +135,28 @@ const CoinsTable = () => {
                             gap: 15,
                           }}
                         >
-                          <div style={{ display: "flex", flexDirection: "column" }}>
-                            <img
+                          <img
                               src={row?.image}
                               alt={row.name}
                               height="50"
                               style={{ marginBottom: 10 }}
                             />
+                          <div style={{ display: "flex", flexDirection: "column" }}>
                             <span
-                                style={{
-                                  textTransform: "uppercase",
-                                  color:"white",
-                                  fontSize: 22,
-                                }}
+                              style={{
+                                textTransform: "uppercase",
+                                color:"white",
+                                fontSize: 22,
+                              }}
                             >
-                                {row.symbol}
+                              {row.symbol}
                             </span>
-                          </div>
-                          <div style={{justifyContent:"center",alignItems:"center",display:"flex"}}>
                             <span
                               style={{
                                 color: "darkgrey",
                               }}
                             >
-                              {row.name}
+                                {row.name}
                             </span>
                           </div>
                         </TableCell>
