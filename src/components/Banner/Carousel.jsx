@@ -32,16 +32,17 @@ const Carousel = () => {
 
     const {currency,symbol} = CryptoState();
 
-    const fetchTrendingCoins = async () => {
-        try {
-            const { data } = await axios.get(TrendingCoins(currency));
-            setTrending(data);
-        } catch (error) {
-            console.error('Error fetching trending coins:', error.message);
-        }
-    };
-
     useEffect(() => {
+
+        const fetchTrendingCoins = async () => {
+            try {
+                const { data } = await axios.get(TrendingCoins(currency));
+                setTrending(data);
+            } catch (error) {
+                console.error('Error fetching trending coins:', error.message);
+            }
+        };
+        
         fetchTrendingCoins();
     },[currency]);
 
